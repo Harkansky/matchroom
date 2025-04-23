@@ -1,0 +1,56 @@
+App\Entity\User:
+  user_{1..10}:
+    username: <userName()>
+    email: <email()>
+    password: <password()>
+    firstName: <firstName()>
+    lastName: <lastName()>
+    dateOfBirth: <dateTimeBetween("-40 years", "-18 years")>
+    phoneNumber: <phoneNumber()>
+    reputationPoints: <numberBetween(0, 100)>
+    badges: []
+    profileImage: 'https://picsum.photos/seed/<uuid()>?w=200&h=200'
+    createdAt: <(new \DateTimeImmutable())>
+    updatedAt: <(new \DateTimeImmutable())>
+
+App\Entity\Hotel:
+  hotel_{1..5}:
+    name: <company()>
+    description: <text(300)>
+    address: <streetAddress()>
+    city: <city()>
+    postalCode: <postcode()>
+    country: <country()>
+    phoneNumber: <phoneNumber()>
+    email: <companyEmail()>
+    starRating: <numberBetween(1, 5)>
+    amenities: ['wifi', 'parking', 'spa', 'bar', 'gym']
+    images:
+      - 'https://picsum.photos/seed/<uuid()>?w=800&h=600'
+      - 'https://picsum.photos/seed/<uuid()>?w=800&h=600'
+    createdAt: <(new \DateTimeImmutable())>
+    updatedAt: <(new \DateTimeImmutable())>
+
+App\Entity\Room:
+  room_{1..15}:
+    hotel: '@hotel_<numberBetween(1,5)>'
+    roomNumber: <bothify('###-??')>
+    roomType: <randomElement(['Single', 'Double', 'Suite', 'Deluxe'])>
+    description: <text(200)>
+    pricePerNight: <randomFloat(2, 50, 300)>
+    capacity: <numberBetween(1, 5)>
+    amenities: ['wifi', 'tv', 'minibar']
+    isAvailable: <boolean()>
+    createdAt: <(new \DateTimeImmutable())>
+    updatedAt: <(new \DateTimeImmutable())>
+
+App\Entity\Reservation:
+  reservation_{1..20}:
+    user: '@user_<numberBetween(1,10)>'
+    room: '@room_<numberBetween(1,15)>'
+    checkIn: <dateTimeBetween("now", "+10 days")>
+    checkOut: <dateTimeBetween("+11 days", "+30 days")>
+    totalPrice: <randomFloat(2, 100, 1500)>
+    status: <randomElement(['pending', 'confirmed', 'cancelled'])>
+    createdAt: <(new \DateTimeImmutable())>
+    updatedAt: <(new \DateTimeImmutable())>

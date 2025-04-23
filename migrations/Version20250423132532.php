@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250423115502 extends AbstractMigration
+final class Version20250423132532 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,6 +20,21 @@ final class Version20250423115502 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql(<<<'SQL'
+            CREATE TABLE app_user (id SERIAL NOT NULL, username VARCHAR(180) NOT NULL, email VARCHAR(180) NOT NULL, password VARCHAR(255) NOT NULL, first_name VARCHAR(100) NOT NULL, last_name VARCHAR(100) NOT NULL, date_of_birth DATE NOT NULL, phone_number VARCHAR(20) NOT NULL, reputation_points INT NOT NULL, badges JSON DEFAULT NULL, profile_image VARCHAR(255) DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))
+        SQL);
+        $this->addSql(<<<'SQL'
+            CREATE UNIQUE INDEX UNIQ_88BDF3E9F85E0677 ON app_user (username)
+        SQL);
+        $this->addSql(<<<'SQL'
+            CREATE UNIQUE INDEX UNIQ_88BDF3E9E7927C74 ON app_user (email)
+        SQL);
+        $this->addSql(<<<'SQL'
+            COMMENT ON COLUMN app_user.created_at IS '(DC2Type:datetime_immutable)'
+        SQL);
+        $this->addSql(<<<'SQL'
+            COMMENT ON COLUMN app_user.updated_at IS '(DC2Type:datetime_immutable)'
+        SQL);
         $this->addSql(<<<'SQL'
             CREATE TABLE badge (id SERIAL NOT NULL, name VARCHAR(50) NOT NULL, description TEXT NOT NULL, icon VARCHAR(100) NOT NULL, PRIMARY KEY(id))
         SQL);
@@ -90,34 +105,19 @@ final class Version20250423115502 extends AbstractMigration
             COMMENT ON COLUMN room.updated_at IS '(DC2Type:datetime_immutable)'
         SQL);
         $this->addSql(<<<'SQL'
-            CREATE TABLE "user" (id SERIAL NOT NULL, username VARCHAR(180) NOT NULL, email VARCHAR(180) NOT NULL, password VARCHAR(255) NOT NULL, first_name VARCHAR(100) NOT NULL, last_name VARCHAR(100) NOT NULL, date_of_birth DATE NOT NULL, phone_number VARCHAR(20) NOT NULL, reputation_points INT NOT NULL, badges JSON DEFAULT NULL, profile_image VARCHAR(255) DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))
-        SQL);
-        $this->addSql(<<<'SQL'
-            CREATE UNIQUE INDEX UNIQ_8D93D649F85E0677 ON "user" (username)
-        SQL);
-        $this->addSql(<<<'SQL'
-            CREATE UNIQUE INDEX UNIQ_8D93D649E7927C74 ON "user" (email)
-        SQL);
-        $this->addSql(<<<'SQL'
-            COMMENT ON COLUMN "user".created_at IS '(DC2Type:datetime_immutable)'
-        SQL);
-        $this->addSql(<<<'SQL'
-            COMMENT ON COLUMN "user".updated_at IS '(DC2Type:datetime_immutable)'
-        SQL);
-        $this->addSql(<<<'SQL'
             ALTER TABLE negotiation_offer ADD CONSTRAINT FK_2AA02B52B83297E7 FOREIGN KEY (reservation_id) REFERENCES reservation (id) NOT DEFERRABLE INITIALLY IMMEDIATE
         SQL);
         $this->addSql(<<<'SQL'
-            ALTER TABLE reservation ADD CONSTRAINT FK_42C84955A76ED395 FOREIGN KEY (user_id) REFERENCES "user" (id) NOT DEFERRABLE INITIALLY IMMEDIATE
+            ALTER TABLE reservation ADD CONSTRAINT FK_42C84955A76ED395 FOREIGN KEY (user_id) REFERENCES app_user (id) NOT DEFERRABLE INITIALLY IMMEDIATE
         SQL);
         $this->addSql(<<<'SQL'
             ALTER TABLE reservation ADD CONSTRAINT FK_42C8495554177093 FOREIGN KEY (room_id) REFERENCES room (id) NOT DEFERRABLE INITIALLY IMMEDIATE
         SQL);
         $this->addSql(<<<'SQL'
-            ALTER TABLE review ADD CONSTRAINT FK_794381C6E2544CD6 FOREIGN KEY (author_user_id) REFERENCES "user" (id) NOT DEFERRABLE INITIALLY IMMEDIATE
+            ALTER TABLE review ADD CONSTRAINT FK_794381C6E2544CD6 FOREIGN KEY (author_user_id) REFERENCES app_user (id) NOT DEFERRABLE INITIALLY IMMEDIATE
         SQL);
         $this->addSql(<<<'SQL'
-            ALTER TABLE review ADD CONSTRAINT FK_794381C66C066AFE FOREIGN KEY (target_user_id) REFERENCES "user" (id) NOT DEFERRABLE INITIALLY IMMEDIATE
+            ALTER TABLE review ADD CONSTRAINT FK_794381C66C066AFE FOREIGN KEY (target_user_id) REFERENCES app_user (id) NOT DEFERRABLE INITIALLY IMMEDIATE
         SQL);
         $this->addSql(<<<'SQL'
             ALTER TABLE review ADD CONSTRAINT FK_794381C6E8E86B71 FOREIGN KEY (target_hotel_id) REFERENCES hotel (id) NOT DEFERRABLE INITIALLY IMMEDIATE
@@ -155,6 +155,9 @@ final class Version20250423115502 extends AbstractMigration
             ALTER TABLE room DROP CONSTRAINT FK_729F519B3243BB18
         SQL);
         $this->addSql(<<<'SQL'
+            DROP TABLE app_user
+        SQL);
+        $this->addSql(<<<'SQL'
             DROP TABLE badge
         SQL);
         $this->addSql(<<<'SQL'
@@ -174,9 +177,6 @@ final class Version20250423115502 extends AbstractMigration
         SQL);
         $this->addSql(<<<'SQL'
             DROP TABLE room
-        SQL);
-        $this->addSql(<<<'SQL'
-            DROP TABLE "user"
         SQL);
     }
 }
