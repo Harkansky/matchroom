@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Table(name: "app_user")]
 class User
 {
     #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: "integer")]
