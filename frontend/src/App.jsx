@@ -6,7 +6,9 @@ import PlanningPage from "./pages/PlanningPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
-import HotelPage from "./pages/HotelsPages.jsx";
+import HotelPage from './pages/HotelsPages.jsx'
+import SearchPage from './components/SearchBar.jsx'
+
 
 function App() {
   const hotelMarkers = [
@@ -94,7 +96,8 @@ function App() {
           />
 
           <Route path="/planning" element={<PlanningPage />} />
-          <Route path="/hotel" element={<HotelPage />} />
+            <Route path="/hotel" element={<HotelPage />} />
+            <Route path="/search" element={<SearchPage />} />
         </Routes>
       </div>
     </BrowserRouter>
