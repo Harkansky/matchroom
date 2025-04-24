@@ -6,6 +6,7 @@ import PlanningPage from "./pages/PlanningPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
+import RoomDetails from "./pages/RoomDetails.jsx";
 
 function App() {
   // Exemple de points à afficher
@@ -50,6 +51,7 @@ function App() {
           />
 
           <Route path="/planning" element={<PlanningPage />} />
+          <Route path="/details" element={<RoomDetails />} />
         </Routes>
       </div>
     </BrowserRouter>
