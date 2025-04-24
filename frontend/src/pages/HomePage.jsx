@@ -6,17 +6,19 @@ function HomePage() {
     <>
       <div>
         <div className="flex flex-col bg-[url(/img/home-main.jpg)] min-h-[600px] bg-cover text-white p-8 text-center my-4 rounded-lg mb-16">
-          <h1 className="text-[69px] font-normal leading-none mb-8 ">
-            Réservez votre séjour en toute simplicité
-          </h1>
-          <h2>
-            Des tarifs avantageux, des services personnalisés et un
-            accompagnement dédié pour une expérience de voyage unique.
-          </h2>
+          <div className="max-w-[700px] mx-auto">
+            <h1 className="text-[69px] font-normal leading-none mb-8 ">
+              Réservez votre séjour en toute simplicité
+            </h1>
+            <h2>
+              Des tarifs avantageux, des services personnalisés et un
+              accompagnement dédié pour une expérience de voyage unique.
+            </h2>
+          </div>
         </div>
 
-        <div>
-          <h2 className="text-[32px] flex items-center gap-2">
+        <section>
+          <h2 className="text-[32px] flex items-baseline gap-2 mb-2">
             Les HOT ONES
             <span>
               <svg
@@ -36,15 +38,37 @@ function HomePage() {
           <span className="text-neutral-gray text-[20px]">
             Découvrez notre sélection du moment !
           </span>
-          <div className="flex gap-3 mt-3">
+          <div className="flex justify-between mt-6">
+            <div className="flex gap-3">
+              <button className="btn text-white rounded-lg bg-main">
+                Paris
+              </button>
+              <button className="btn ">Bordeaux</button>
+              <button className="btn ">Marseille</button>
+              <button className="btn">Nîmes</button>
+            </div>
+            <button className="btn">Tout voir</button>
+          </div>
+          <div className="flex gap-4 mt-9">
             <AdsCard />
             <AdsCard />
             <AdsCard />
             <AdsCard />
           </div>
-        </div>
+        </section>
 
-        <div></div>
+        <section>
+          <div className="flex justify-between items-center">
+            <h2 className="text-[32px] flex items-baseline gap-2 mb-2">
+              Des offres promotionnels rien que pour vous !
+            </h2>
+            <button className="btn">Tout voir</button>
+          </div>
+          <div className="flex gap-3">
+            <div className="w-full bg-[url(/img/promo1.jpg)] bg-cover  h-[200px] rounded-lg"></div>
+            <div className="w-full bg-[url(/img/promo2.jpg)] bg-cover  h-[200px] rounded-lg"></div>
+          </div>
+        </section>
       </div>
     </>
   );
