@@ -1,32 +1,37 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-# Vérifie si le .env.dev existe, le crée sinon
-if [ ! -f ./.env.dev ] ; then
-    echo "Configurer le username de la BDD PostgreSQL"
-    read DB_USER
+# ── 1) Génération de backend/.env.dev si absent
+if [ ! -f backend/.env.dev ] ; then
+  echo "== Configuration de la base de données PostgreSQL =="
+  read -p "  • DB_USER : " DB_USER
+  read -p "  • DB_PASSWORD : " DB_PASSWORD
+  read -p "  • DB_PORT : " DB_PORT
+  read -p "  • WEB_PORT (Symfony) : " WEB_PORT
 
-    echo "Configurer le mot de passe de la BDD PostgreSQL"
-    read DB_PASSWORD
+  cp backend/.env.dev.dist backend/.env.dev
+  sed -i "s|^DB_USER=.*|DB_USER=${DB_USER}|"       backend/.env.dev
+  sed -i "s|^DB_PASSWORD=.*|DB_PASSWORD=${DB_PASSWORD}|" backend/.env.dev
+  sed -i "s|^DB_PORT=.*|DB_PORT=${DB_PORT}|"       backend/.env.dev
+  sed -i "s|^WEB_PORT=.*|WEB_PORT=${WEB_PORT}|"     backend/.env.dev
 
-    echo "Configurer le port d'ouverture de la BDD PostgreSQL"
-    read DB_PORT
-
-    echo "Configurer le port d'ouverture de l'application web"
-    read WEB_PORT
-
-    cp ./.env.dev.dist ./.env.dev
-    sed -i 's/DB_USER=/DB_USER='"$DB_USER"'/g' ./.env.dev
-    sed -i 's/DB_PASSWORD=/DB_PASSWORD='"$DB_PASSWORD"'/g' ./.env.dev
-    sed -i 's/DB_PORT=/DB_PORT='"$DB_PORT"'/g' ./.env.dev
-    sed -i 's/WEB_PORT=/WEB_PORT='"$WEB_PORT"'/g' ./.env.dev
-
-    echo "Fichier .env.dev créé"
+  echo "✔︎ backend/.env.dev créé"
 fi
 
-# Charge les variables d'environnement
+# ── 2) Chargement des variables d'environnement
 set -a
-. .env.dev
+. backend/.env.dev
 set +a
 
-# Lance les containers
-docker compose -f ./compose.yaml up -d --remove-orphans
+# ── 3) Lancement des services Docker (db, backend, frontend-old, nginx)
+docker compose -f compose.yml up -d --build --remove-orphans
+
+echo -e "\n✅ Containers démarrés :"
+echo "  • Symfony API → http://localhost:${WEB_PORT}"
+echo "  • React Dev  → http://localhost:3000"
+echo "  • Nginx (prod) → http://localhost:8080"
+
+# ── 4) (Optionnel) Suivi des logs React / Symfony
+echo -e "\nSuivi des logs (CTRL+C pour sortir) :"
+echo "  • Symfony : docker compose logs -f backend"
+echo "  • React   : docker compose logs -f frontend"

@@ -1,0 +1,61 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${HOST_DB_PORT}:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file: .env
+    environment:
+      APP_ENV: dev
+      DATABASE_URL: "postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}?serverVersion=16&charset=utf8"
+    volumes:
+      - ./backend:/app:cached
+    ports:
+      - "${WEB_PORT}:8000"
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    env_file: .env
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - HOST=0.0.0.0
+      - PORT=${VITE_PORT}
+    volumes:
+      - ./frontend:/app:cached
+      - /app/node_modules
+    ports:
+      - "${VITE_PORT}:${VITE_PORT}"
+    command: ["npm","run","dev"]
+    depends_on:
+      - backend
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d:ro
+      - ./backend/public:/var/www/html
+      - ./frontend/dist:/var/www/html/app
+    depends_on:
+      - backend
+      - frontend
+
+volumes:
+  db-data:
