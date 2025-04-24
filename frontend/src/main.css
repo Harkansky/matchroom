@@ -1,11 +1,19 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: light --default;
+    themes: light --default;
 }
 
 @theme {
-  --color-main: #7f3a65;
-  --color-secondary-yellow: #e7c54b;
-  --color-neutral-gray: #707070;
-  --color-neutral2: #6c7278;
+    --color-main: #7f3a65;
+    --color-secondary-yellow: #e7c54b;
+    --color-neutral-gray: #707070;
+    --color-neutral2: #6c7278;
+    --font-neue-montreal: "Neue Montreal", sans-serif;
+}
+
+@font-face {
+    font-family: "Neue Montreal", sans-serif;
+    src: url("/fonts/PPNeueMontreal-Medium.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
 }
