@@ -6,9 +6,9 @@ import PlanningPage from "./pages/PlanningPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
+import HotelPage from './pages/HotelsPages.jsx'
 
 function App() {
-  // Exemple de points à afficher
   const hotelMarkers = [
     { id: 1, position: [48.8566, 2.3522], popupText: "Hôtel 1 à Paris" },
     {
@@ -50,10 +50,11 @@ function App() {
           />
 
           <Route path="/planning" element={<PlanningPage />} />
+            <Route path="/hotel" element={<HotelPage />} />
         </Routes>
       </div>
     </BrowserRouter>
   );
 }
 
-export default App;
+export default App

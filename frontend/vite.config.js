@@ -6,7 +6,6 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 5173,
-    // proxy toutes les requêtes /api vers le backend
     proxy: {
       '/api': {
         target: 'http://backend:8000',

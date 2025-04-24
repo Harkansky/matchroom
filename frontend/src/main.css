@@ -1,9 +1,9 @@
+/* importe Preflight, le thème, les utilitaires… tout en une ligne */
 @import "tailwindcss";
-@plugin "daisyui" {
-  themes: light --default;
-}
 
-@theme {
+
+/* tes variables CSS, si besoin */
+:root {
   --color-main: #7f3a65;
   --color-secondary: #e7c54b;
   --color-neutral: #6c7278;
