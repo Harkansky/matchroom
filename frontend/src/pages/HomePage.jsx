@@ -1,5 +1,6 @@
 import { useState } from "react";
 import AdsCard from "../components/Ads/AdsCard";
+import Footer from "../components/Footer/Footer";
 
 function HomePage() {
   return (
@@ -17,7 +18,7 @@ function HomePage() {
           </div>
         </div>
 
-        <section>
+        <section className="mb-16">
           <h2 className="text-[32px] flex items-baseline gap-2 mb-2">
             Les HOT ONES
             <span>
@@ -38,6 +39,7 @@ function HomePage() {
           <span className="text-neutral-gray text-[20px]">
             Découvrez notre sélection du moment !
           </span>
+
           <div className="flex justify-between mt-6">
             <div className="flex gap-3">
               <button className="btn text-white rounded-lg bg-main">
@@ -49,6 +51,7 @@ function HomePage() {
             </div>
             <button className="btn">Tout voir</button>
           </div>
+
           <div className="flex gap-4 mt-9">
             <AdsCard />
             <AdsCard />
@@ -57,18 +60,42 @@ function HomePage() {
           </div>
         </section>
 
-        <section>
+        <section className="mb-16">
           <div className="flex justify-between items-center">
-            <h2 className="text-[32px] flex items-baseline gap-2 mb-2">
+            <h2 className="text-[32px] flex items-baseline gap-2">
               Des offres promotionnels rien que pour vous !
             </h2>
             <button className="btn">Tout voir</button>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 mt-8">
             <div className="w-full bg-[url(/img/promo1.jpg)] bg-cover  h-[200px] rounded-lg"></div>
             <div className="w-full bg-[url(/img/promo2.jpg)] bg-cover  h-[200px] rounded-lg"></div>
           </div>
         </section>
+
+        <section>
+          <h2 className="text-[32px] flex items-baseline gap-2 mb-2">
+            Pas d’idée où aller ?
+          </h2>
+
+          <span className="text-neutral-gray text-[20px]">
+            Explorez la map afin d’avoir une destination qui vous convient
+          </span>
+
+          <div className="flex justify-between mt-6">
+            <div className="flex gap-3">
+              <button className="btn text-white rounded-lg bg-main">
+                Paris
+              </button>
+              <button className="btn ">Bordeaux</button>
+              <button className="btn ">Marseille</button>
+              <button className="btn">Nîmes</button>
+            </div>
+            <button className="btn">Tout voir</button>
+          </div>
+        </section>
+
+        <Footer />
       </div>
     </>
   );

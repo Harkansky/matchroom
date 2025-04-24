@@ -1,6 +1,6 @@
 const AdsCard = () => {
   return (
-    <div>
+    <div className="flex-1">
       <div className="w-full bg-[url(/img/ads2.jpg)] bg-cover  h-[200px] rounded-lg"></div>
       <h3 className="font-bold text-[22px] mt-3">Hotel Neyer</h3>
       <div className="text-neutral-gray flex gap-1 items-center">
