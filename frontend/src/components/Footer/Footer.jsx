@@ -62,8 +62,8 @@ const Footer = () => {
                 <div className="flex flex-col">
                   <input
                     type="email"
-                    className="bg-white/80"
-                    placeholder="mail@gmail.com"
+                    className="text-black bg-white/80"
+                    placeholder="Entrez votre email"
                     required
                   />
                   <div className="flex gap-4"></div>
@@ -73,7 +73,7 @@ const Footer = () => {
                 Enter valid email address
               </div>
             </div>
-            <button className="btn btn-neutral join-item">Join</button>
+            <button className="btn btn-neutral join-item">S'inscrire</button>
           </div>
         </div>
       </div>
