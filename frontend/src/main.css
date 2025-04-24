@@ -5,6 +5,7 @@
 
 @theme {
   --color-main: #7f3a65;
-  --color-secondary: #e7c54b;
-  --color-neutral: #6c7278;
+  --color-secondary-yellow: #e7c54b;
+  --color-neutral-gray: #707070;
+  --color-neutral2: #6c7278;
 }
