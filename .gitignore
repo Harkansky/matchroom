@@ -21,3 +21,6 @@ yarn-error.log
 /package-lock.json
 /composer.lock
 /symfony.lock
+
+backend/var/
+backend/vendor/
