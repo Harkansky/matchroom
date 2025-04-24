@@ -1,14 +1,14 @@
 // src/App.jsx
-import React from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import MapView from "./components/MapView";
-import PlanningPage from "./pages/PlanningPage.jsx";
-import LoginPage from "./pages/LoginPage.jsx";
-import RegisterPage from "./pages/RegisterPage.jsx";
-import HomePage from "./pages/HomePage.jsx";
-import RoomDetails from "./pages/RoomDetails.jsx";
-import HotelPage from './pages/HotelsPages.jsx'
-import SearchPage from './components/SearchBar.jsx'
+import React from "react"
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
+import MapView from "./components/MapView"
+import PlanningPage from "./pages/PlanningPage.jsx"
+import LoginPage from "./pages/LoginPage.jsx"
+import RegisterPage from "./pages/RegisterPage.jsx"
+import HomePage from "./pages/HomePage.jsx"
+import RoomDetails from "./pages/RoomDetails.jsx"
+import HotelPage from "./pages/HotelsPages.jsx"
+import SearchPage from "./components/SearchBar.jsx"
 import Navbar from "./components/Navbar/Navbar.jsx"
 
 function App() {
@@ -40,14 +40,15 @@ function App() {
                             }
                         />
 
-          <Route path="/planning" element={<PlanningPage />} />
-          <Route path="/details" element={<RoomDetails />} />
-            <Route path="/hotel" element={<HotelPage />} />
-            <Route path="/search" element={<SearchPage />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
-  );
+                        <Route path="/planning" element={<PlanningPage />} />
+                        <Route path="/details" element={<RoomDetails />} />
+                        <Route path="/hotel" element={<HotelPage />} />
+                        <Route path="/search" element={<SearchPage />} />
+                    </Routes>
+                </div>
+            </div>
+        </BrowserRouter>
+    )
 }
 
 export default App
