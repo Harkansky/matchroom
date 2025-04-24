@@ -1,3 +1,4 @@
+# fixtures/dev.yaml
 App\Entity\User:
   user_{1..10}:
     username: <userName()>
@@ -54,3 +55,12 @@ App\Entity\Reservation:
     status: <randomElement(['pending', 'confirmed', 'cancelled'])>
     createdAt: <(new \DateTimeImmutable())>
     updatedAt: <(new \DateTimeImmutable())>
+
+App\Entity\NegotiationOffer:
+  negotiationOffer_{1..20}:
+    reservation: '@reservation_<numberBetween(1,20)>'
+    sender: <randomElement(['user','hotel'])>
+    proposedPrice: <randomFloat(2, 100, 1500)>
+    bonusAmenities: []
+    createdAt: <(new \DateTimeImmutable())>
+
