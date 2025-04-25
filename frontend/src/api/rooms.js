@@ -5,10 +5,18 @@ export async function fetchRooms(filters = {}) {
             p.append(k, Array.isArray(v) ? v.join(',') : v);
         }
     });
+
     const res = await fetch(`/api/rooms?${p.toString()}`, {
         headers: { 'Accept': 'application/json' }
     });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const json = await res.json();
+
+    const raw = await res.text();
+    console.log("🔴 Réponse brute reçue :", raw);
+
+    if (!res.ok) {
+        throw new Error(`HTTP ${res.status} : ${raw}`);
+    }
+
+    const json = JSON.parse(raw);
     return json.data;
 }

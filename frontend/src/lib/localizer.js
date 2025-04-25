@@ -1,14 +1,6 @@
-// src/lib/localizer.js
-import { dateFnsLocalizer } from 'react-big-calendar'
-import { format, parse, startOfWeek, getDay } from 'date-fns'
-import enUS from 'date-fns/locale/en-US'
+import moment from 'moment'
+import 'moment/locale/fr'
+import { momentLocalizer } from 'react-big-calendar'
 
-const locales = { 'en-US': enUS }
-
-export const localizer = dateFnsLocalizer({
-    format,
-    parse,
-    startOfWeek,
-    getDay,
-    locales,
-})
+moment.locale('fr')
+export const localizer = momentLocalizer(moment)

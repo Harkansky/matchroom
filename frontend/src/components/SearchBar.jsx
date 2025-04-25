@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { fetchRooms } from '../api/rooms';
 
-// mots vides pour le « keyword search »
 const STOP_WORDS = [
     'le','la','les','de','des','du','un','une','et','avec','pour','en',
     'au','aux','à','dans','sur','sous','chez','par','que','qui'
@@ -9,18 +8,24 @@ const STOP_WORDS = [
 
 export default function SearchBar() {
     const [input, setInput] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
     const [rooms, setRooms] = useState([]);
 
     const handleSearch = async e => {
         e.preventDefault();
-        // découpe, supprime stop-words
+
         const terms = input
             .toLowerCase()
             .split(/\s+/)
             .filter(w => w && !STOP_WORDS.includes(w));
 
         try {
-            const data = await fetchRooms({ keywords: terms });
+            const data = await fetchRooms({
+                keywords: terms,
+                startDate,
+                endDate,
+            });
             setRooms(data);
         } catch (err) {
             console.error(err);
@@ -30,13 +35,25 @@ export default function SearchBar() {
 
     return (
         <div className="max-w-3xl mx-auto p-6">
-            <form onSubmit={handleSearch} className="flex space-x-2 mb-6">
+            <form onSubmit={handleSearch} className="flex flex-wrap gap-2 mb-6">
                 <input
                     type="text"
                     value={input}
                     onChange={e => setInput(e.target.value)}
                     placeholder="Rechercher chambre, hôtel, ville…"
-                    className="flex-1 border rounded px-3 py-2 focus:outline-none"
+                    className="flex-1 border rounded px-3 py-2"
+                />
+                <input
+                    type="date"
+                    value={startDate}
+                    onChange={e => setStartDate(e.target.value)}
+                    className="border rounded px-3 py-2"
+                />
+                <input
+                    type="date"
+                    value={endDate}
+                    onChange={e => setEndDate(e.target.value)}
+                    className="border rounded px-3 py-2"
                 />
                 <button
                     type="submit"
@@ -58,6 +75,7 @@ export default function SearchBar() {
                             <th className="p-2 text-left">Équipements</th>
                             <th className="p-2 text-left">Hôtel</th>
                             <th className="p-2 text-left">Ville</th>
+                            <th className="p-2 text-center">Disponibilité</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -70,6 +88,14 @@ export default function SearchBar() {
                                 <td className="p-2">{r.amenities.join(', ')}</td>
                                 <td className="p-2">{r.hotelName}</td>
                                 <td className="p-2">{r.hotelCity}</td>
+                                <td className="p-2 text-center">
+                                    {r.available ? (
+                                        <span className="text-green-600 font-semibold">Disponible</span>
+                                    ) : (
+                                        <span className="text-red-600 font-semibold">Non dispo</span>
+                                    )}
+                                </td>
+
                             </tr>
                         ))}
                         </tbody>
