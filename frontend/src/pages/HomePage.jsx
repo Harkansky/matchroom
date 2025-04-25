@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import AdsCard from "../components/Ads/AdsCard"
 import Footer from "../components/Footer/Footer"
+import MapView from "../components/MapView";
 
 function HomePage() {
     const [hotels, setHotels] = useState([])
@@ -134,6 +135,7 @@ function HomePage() {
                         <button className="btn md:btn-lg md:text-base">Tout voir</button>
                     </div>
 
+
                     <div className="flex gap-4 mt-9">
                         {hotels.length > 0 &&
                             hotels
@@ -179,6 +181,10 @@ function HomePage() {
                         <button className="btn md:btn-lg md:text-base">Tout voir</button>
                     </div>
                 </section>
+
+                <div className="max-w-screen-xl mx-auto h-[650px] rounded-2xl overflow-hidden shadow-lg">
+                    <MapView lat={40.8566} lng={2.3522} zoom={12} />
+                </div>
 
                 <Footer />
             </div>

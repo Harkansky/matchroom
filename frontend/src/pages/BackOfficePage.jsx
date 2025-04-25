@@ -1,7 +1,7 @@
 // src/pages/MainPage.jsx
 import React, { useState } from "react"
 import PlanningPage from "./PlanningPage"
-import SearchPage from "../components/SearchBar"
+import DetailledPage from "../pages/ReservationDetailsPage.jsx"
 import HotelPage from "./HotelsPages"
 import logo from "../../public/img/logo_2.png"
 
@@ -13,7 +13,7 @@ export default function MainPage() {
             case "planning":
                 return <PlanningPage />
             case "search":
-                return <SearchPage />
+                return <DetailledPage />
             default:
                 return null
         }
