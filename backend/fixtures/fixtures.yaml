@@ -14,11 +14,11 @@ App\Entity\User:
         createdAt: <(new \DateTimeImmutable())>
         updatedAt: <(new \DateTimeImmutable())>
     user_test:
-        username: "adrienqua"
-        email: "adrien.q@gmail.com"
-        plainPassword: "adrien1234"
-        firstName: "Adrien"
-        lastName: "qua"
+        username: "johndoe"
+        email: "john.doe@gmail.com"
+        plainPassword: "john1234"
+        firstName: "Joen"
+        lastName: "Doe"
         dateOfBirth: <dateTimeBetween("-40 years", "-18 years")>
         phoneNumber: <phoneNumber()>
         reputationPoints: <numberBetween(0, 100)>
