@@ -135,9 +135,17 @@ function HomePage() {
                     </div>
 
                     <div className="flex gap-4 mt-9">
-                        {hotels.slice(0, 4).map((hotel, index) => (
-                            <AdsCard city={hotel.city} starRating={hotel.starRating} img={index + 1} />
-                        ))}
+                        {hotels.length > 0 &&
+                            hotels
+                                .slice(0, 4)
+                                .map((hotel, index) => (
+                                    <AdsCard
+                                        name={hotel.name}
+                                        city={hotel.city}
+                                        starRating={hotel.starRating}
+                                        img={index + 1}
+                                    />
+                                ))}
                     </div>
                 </section>
 

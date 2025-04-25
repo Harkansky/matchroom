@@ -1,14 +1,17 @@
 import { Link } from "react-router-dom"
 
-const AdsCard = ({ city, starRating, img }) => {
+const AdsCard = ({ city, starRating, name, img }) => {
     const randomPrice = Math.floor(Math.random() * (300 - 50 + 1)) + 50
 
     const randomComments = Math.floor(Math.random() * (500 - 50 + 1)) + 50
 
     return (
         <Link to="/" className="flex-1 min-w-[200px]">
-            <div className={`w-full bg-[url(/img/hotel${img}.jpg)] bg-cover  h-[200px] rounded-lg`}></div>
-            <h3 className="text-lg md:text-[22px] mt-3">Hotel Neyer</h3>
+            <div
+                className={`w-full bg-cover  h-[200px] rounded-lg`}
+                style={{ backgroundImage: `url(/img/hotel${img}.jpg)` }}
+            ></div>
+            <h3 className="text-lg md:text-[22px] mt-3 truncate ">{name}</h3>
             <div className="text-neutral-gray flex gap-1 items-center">
                 <span>
                     <svg
@@ -46,7 +49,9 @@ const AdsCard = ({ city, starRating, img }) => {
                         />
                     </svg>
                 </span>
-                <span className="text-sm md:text-base text-neutral-gray">4.8 ({randomComments} avis)</span>
+                <span className="text-sm md:text-base text-neutral-gray">
+                    {starRating} ({randomComments} avis)
+                </span>
             </div>
             <span className="text-lg md:text-[26px]">{randomPrice}€/nuit</span>
             <div>
