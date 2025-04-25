@@ -6,7 +6,9 @@ import PlanningPage from "./pages/PlanningPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
-import HotelPage from './pages/HotelsPages.jsx'
+import HotelPage from './pages/HotelsPages.jsx';
+import NegoPage from './pages/NegoPage.jsx';
+import UsersPage from "./pages/UsersPage.jsx";
 
 function App() {
   const hotelMarkers = [
@@ -33,6 +35,8 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/nego/:id" element={<NegoPage />} />
+          <Route path="/users" element={<UsersPage />} />
           <Route
             path="/test-map"
             element={
