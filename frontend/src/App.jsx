@@ -42,6 +42,8 @@ function AppRoutes() {
                             </div>
                         }
                     />
+                    <Route path="/nego/:id" element={<NegoPage />} />
+                    <Route path="/users" element={<UsersPage />} />
 
                     <Route path="/planning" element={<PlanningPage />} />
                     <Route path="/details" element={<RoomDetails />} />
