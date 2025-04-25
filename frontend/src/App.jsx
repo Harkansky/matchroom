@@ -11,6 +11,8 @@ import SearchPage from "./components/SearchBar.jsx"
 import Navbar from "./components/Navbar/Navbar.jsx"
 import BackOffice from "./pages/BackOfficePage.jsx"
 import ProfilePage from "./pages/ProfilePage.jsx"
+import NegoPage from './pages/NegoPage.jsx'
+import UsersPage from "./pages/UsersPage.jsx"
 
 function AppRoutes() {
     const location = useLocation()
@@ -46,6 +48,7 @@ function AppRoutes() {
                     <Route path="/hotel" element={<HotelPage />} />
                     <Route path="/search" element={<SearchPage />} />
                     <Route path="/profil" element={<ProfilePage />} />
+                    <Route path="/nego/:id" element={<NegoPage />} />
                 </Routes>
             </div>
             <Routes>
