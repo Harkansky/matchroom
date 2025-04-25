@@ -6,7 +6,7 @@ export default function ReservationDetailsPage() {
     useEffect(() => {
         fetch('/api/reservations/detailed')
             .then(res => res.json())
-            .then(json => setReservations(json.data))
+            .then(json => setReservations(json.data.slice(0, 9)))
             .catch(err => {
                 console.error(err);
                 alert('Erreur lors du chargement des réservations');
@@ -14,19 +14,17 @@ export default function ReservationDetailsPage() {
     }, []);
 
     return (
-        <div className="flex flex-col md:flex-row p-6 gap-6">
-
-            {/* Colonne gauche : visuel hôtel + chambre */}
-            <div className="flex-1 space-y-4">
-                {reservations.map((r, i) => (
-                    <div key={i} className="rounded-lg overflow-hidden shadow-lg relative">
+        <div className="flex p-6 gap-6">
+            <div className="flex flex-col w-[434px] h-[225px]">
+                {reservations.slice(0, 4).map((r, i) => (
+                    <div key={i} className="w-full h-[200px] relative shadow-lg">
                         <img
-                            src={`https://source.unsplash.com/600x400/?hotel,room,${i}`}
-                            alt="hotel preview"
-                            className="w-full h-40 object-cover"
+                            src={`https://picsum.photos/800/400?random=${i}`}
+                            alt="Aperçu hôtel"
+                            className="w-full h-full object-cover"
                         />
-                        <div className="absolute bottom-0 bg-gradient-to-t from-black/70 to-transparent text-white p-4 w-full">
-                            <h3 className="font-semibold text-lg">{r.hotel.name}</h3>
+                        <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/70 to-transparent text-white">
+                            <h3 className="text-lg font-bold">{r.hotel.name}</h3>
                             <p className="text-sm">{r.hotel.city}</p>
                             <p className="text-sm">Chambre {r.room.number} - {r.room.type}</p>
                             <p className="text-xs">{r.checkIn} ➞ {r.checkOut}</p>
@@ -35,20 +33,22 @@ export default function ReservationDetailsPage() {
                 ))}
             </div>
 
-            {/* Colonne droite : infos client + prix */}
-            <div className="flex-1 space-y-4">
+            <div className="flex flex-col items-center gap-1 w-full md:w-1/2">
                 {reservations.map((r, i) => (
                     <div
                         key={i}
-                        className="bg-white rounded-lg shadow-md p-4 flex items-center justify-between"
+                        className="w-[90%] h-[90px] bg-white p-4 flex justify-between items-center shadow-lg rounded-md"
                     >
-                        <div>
-                            <p className="font-semibold text-gray-800">{r.user.firstName}</p>
-                            <p className="text-sm text-gray-500">Statut : {r.status}</p>
+                        <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 rounded-full bg-gray-300" />
+                            <div>
+                                <p className="font-semibold text-gray-900">{r.user.firstName} {r.user.lastName}</p>
+                                <p className="text-sm text-gray-500">⭐ {r.user.rating || "4.9"}</p>
+                            </div>
                         </div>
-                        <div className="text-right">
-                            <p className="text-lg font-bold text-gray-800">{r.room.pricePerNight}€</p>
-                            <p className="line-through text-sm text-gray-400">{r.totalPrice}€</p>
+                        <div className="flex items-center gap-2 text-right">
+                            <p className="text-lg font-bold text-black">{r.room.pricePerNight}€</p>
+                            <p className="text-lg font-bold text-black line-through">{r.totalPrice}€</p>
                         </div>
                     </div>
                 ))}

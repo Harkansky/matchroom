@@ -11,7 +11,7 @@ export async function fetchRooms(filters = {}) {
     });
 
     const raw = await res.text();
-    console.log("🔴 Réponse brute reçue :", raw);
+    console.log("reçue :", raw);
 
     if (!res.ok) {
         throw new Error(`HTTP ${res.status} : ${raw}`);

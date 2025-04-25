@@ -34,13 +34,9 @@ class RoomController extends AbstractController
 
             foreach ($rooms as $r) {
                 $h = $r->getHotel();
-
-                // 🔘 Filtre capacité minimale
                 if ($minCap > 0 && $r->getCapacity() < $minCap) {
                     continue;
                 }
-
-                // 🔘 Filtre Levenshtein sur les mots-clés
                 if (!empty($hasKeywords)) {
                     $match = false;
 
@@ -66,8 +62,6 @@ class RoomController extends AbstractController
 
                     if (!$match) continue;
                 }
-
-                // 🔒 Vérifie si la chambre est dispo
                 $isAvailable = true;
 
                 if ($startDate && $endDate) {
