@@ -1,59 +1,27 @@
 <?php
+// src/Controller/Api/HotelController.php
 namespace App\Controller\Api;
 
-use App\Repository\RoomRepository;
+use App\Repository\HotelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api/rooms', name: 'api_rooms_')]
-class RoomController extends AbstractController
+class HotelController extends AbstractController
 {
-    #[Route('', name: 'list', methods: ['GET'])]
-    public function list(Request $request, RoomRepository $repo): JsonResponse
+    #[Route('/api/hotels', name: 'api_hotels', methods: ['GET'])]
+    public function list(HotelRepository $repo): JsonResponse
     {
-        $qb = $repo->createQueryBuilder('r')
-            ->join('r.hotel','h')
-            ->addSelect('h');
-        if ($kw = $request->query->get('keywords')) {
-            $words = explode(',', $kw);
-            foreach ($words as $i => $word) {
-                $param = "kw{$i}";
-                $qb->andWhere(
-                    $qb->expr()->orX(
-                        "LOWER(h.name)        LIKE :{$param}",
-                        "LOWER(h.city)        LIKE :{$param}",
-                        "LOWER(r.roomNumber)  LIKE :{$param}",
-                        "LOWER(r.roomType)    LIKE :{$param}",
-                        "LOWER(r.description) LIKE :{$param}"
-                    )
-                )
-                    ->setParameter($param, '%'.strtolower($word).'%');
-            }
-        }
-        if ($minCap = (int)$request->query->get('minCapacity', 0)) {
-            $qb->andWhere('r.capacity >= :minCap')
-                ->setParameter('minCap', $minCap);
-        }
+        $hotels = $repo->findAll();
 
-        $rooms = $qb->getQuery()->getResult();
+        $data = array_map(fn($h) => [
+            'id'           => $h->getId(),
+            'name'         => $h->getName(),
+            'city'         => $h->getCity(),
+            'starRating'   => $h->getStarRating(),
+            'amenities'    => $h->getAmenities(),
+        ], $hotels);
 
-        $out = [];
-        foreach ($rooms as $r) {
-            $h = $r->getHotel();
-            $out[] = [
-                'roomId'      => $r->getId(),
-                'roomNumber'  => $r->getRoomNumber(),
-                'roomType'    => $r->getRoomType(),
-                'capacity'    => $r->getCapacity(),
-                'price'       => $r->getPricePerNight(),
-                'amenities'   => $r->getAmenities(),
-                'hotelName'   => $h->getName(),
-                'hotelCity'   => $h->getCity(),
-            ];
-        }
-
-        return $this->json(['data' => $out]);
+        return $this->json($data);
     }
 }
