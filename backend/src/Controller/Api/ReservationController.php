@@ -125,6 +125,7 @@ public function listByUsername(ReservationRepository $repo, string $username): J
             ],
             'checkIn' => $r->getCheckIn()->format(\DateTime::ATOM),
             'checkOut' => $r->getCheckOut()->format(\DateTime::ATOM),
+            'totalPrice' => $r->getTotalPrice(),
         ];
     }, $reservations);
 
