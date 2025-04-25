@@ -1,5 +1,4 @@
 <?php
-// src/Controller/Api/UserController.php
 
 namespace App\Controller\Api;
 
@@ -15,7 +14,6 @@ class UserController extends AbstractController
     {
         $users = $repo->findAll();
 
-        // transforme l’entité en tableau simple
         $data = array_map(fn($u) => [
             'id'         => $u->getId(),
             'username'   => $u->getUsername(),
@@ -23,6 +21,23 @@ class UserController extends AbstractController
             'firstName'  => $u->getFirstName(),
             'lastName'   => $u->getLastName(),
         ], $users);
+
+        return new JsonResponse($data);
+    }
+
+    #[Route('/api/users/{username}', name: 'api_user_details', methods: ['GET'])]
+    public function show(UserRepository $repo, string $username): JsonResponse
+    {
+        $user = [$repo->findOneBy(['username' => $username])];
+
+        $data = array_map(fn($u) => [
+            'id'         => $u->getId(),
+            'username'   => $u->getUsername(),
+            'email'      => $u->getEmail(),
+            'firstName'  => $u->getFirstName(),
+            'lastName'   => $u->getLastName(),
+        ], $user);
+
 
         return new JsonResponse($data);
     }

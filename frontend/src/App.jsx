@@ -1,7 +1,6 @@
-// src/App.jsx
-import React from "react"
+import React, { useEffect } from "react"
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"
-import MapView from "./components/MapView"
+import MapView from "./components/MapView.jsx"
 import PlanningPage from "./pages/PlanningPage.jsx"
 import LoginPage from "./pages/LoginPage.jsx"
 import RegisterPage from "./pages/RegisterPage.jsx"
@@ -11,6 +10,7 @@ import HotelPage from "./pages/HotelsPages.jsx"
 import SearchPage from "./components/SearchBar.jsx"
 import Navbar from "./components/Navbar/Navbar.jsx"
 import BackOffice from "./pages/BackOfficePage.jsx"
+import ProfilePage from "./pages/ProfilePage.jsx"
 
 function AppRoutes() {
     const location = useLocation()
@@ -35,17 +35,17 @@ function AppRoutes() {
                         path="/test-map"
                         element={
                             <div>
-                                <h1 className="text-center text-2xl my-4">
-                                    Carte OpenStreetMap avec Leaflet
-                                </h1>
+                                <h1 className="text-center text-2xl my-4">Carte OpenStreetMap avec Leaflet</h1>
                                 <MapView center={[48.8566, 2.3522]} zoom={12} markers={hotelMarkers} />
                             </div>
                         }
                     />
+
                     <Route path="/planning" element={<PlanningPage />} />
                     <Route path="/details" element={<RoomDetails />} />
                     <Route path="/hotel" element={<HotelPage />} />
                     <Route path="/search" element={<SearchPage />} />
+                    <Route path="/profil" element={<ProfilePage />} />
                 </Routes>
             </div>
             <Routes>

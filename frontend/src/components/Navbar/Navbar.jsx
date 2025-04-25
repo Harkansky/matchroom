@@ -1,12 +1,22 @@
 import { Link } from "react-router-dom"
+import { useAuth } from "../../context/AuthProvider"
 
 const Navbar = () => {
+    const { user } = useAuth()
+
     return (
         <nav className=" bg-gray-100 flex justify-between space-x-4 py-5">
             <div className="container mx-auto max-w-[1200px] flex justify-between items-center static px-4">
                 <div className="flex items-center gap-8">
                     <Link to="/" className="text-blue-600 hover:underline">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="31" height="34" viewBox="0 0 31 34" fill="none">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="31"
+                            height="34"
+                            viewBox="0 0 31 34"
+                            fill="none"
+                            className="w-6 md:w-[31px]"
+                        >
                             <g clip-path="url(#clip0_40_527)">
                                 <path
                                     d="M10.0388 8.13675C12.2286 8.13675 14.0038 6.36158 14.0038 4.1718C14.0038 1.98202 12.2286 0.206848 10.0388 0.206848C7.84906 0.206848 6.07389 1.98202 6.07389 4.1718C6.07389 6.36158 7.84906 8.13675 10.0388 8.13675Z"
@@ -32,23 +42,55 @@ const Navbar = () => {
                             </defs>
                         </svg>
                     </Link>
-                    <Link className="text-lg" to="/hotels">
+                    <Link className="md:text-lg text-base" to="/hotels">
                         Hôtels
                     </Link>
-                    <Link className="text-lg" to="/campings">
+                    <Link className="md:text-lg text-base" to="/campings">
                         Campings
                     </Link>
                 </div>
                 <div className="flex gap-4">
-                    <Link
-                        to="/register"
-                        className="btn btn-ghost rounded-lg text-lg font-medium hover:bg-white btn-lg text-base"
-                    >
-                        Inscription
-                    </Link>
-                    <Link to="/login" className="btn rounded-lg text-lg font-medium bg-white btn-lg text-base">
-                        Connexion
-                    </Link>
+                    <>
+                        {user && (
+                            <Link
+                                to="/profil"
+                                className="rounded-lg md:text-lg font-medium flex gap-2  btn-lg text-base"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={1.5}
+                                    stroke="currentColor"
+                                    className="size-6"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                                    />
+                                </svg>
+
+                                <span>{user.username}</span>
+                            </Link>
+                        )}
+                        {!user && (
+                            <>
+                                <Link
+                                    to="/register"
+                                    className="btn btn-ghost rounded-lg md:text-lg font-medium hover:bg-white btn-lg text-base"
+                                >
+                                    Inscription
+                                </Link>
+                                <Link
+                                    to="/login"
+                                    className="btn rounded-lg md:text-lg font-medium bg-white btn-lg text-base"
+                                >
+                                    Connexion
+                                </Link>
+                            </>
+                        )}
+                    </>
                 </div>
             </div>
         </nav>
