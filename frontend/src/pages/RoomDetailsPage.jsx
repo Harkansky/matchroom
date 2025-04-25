@@ -140,7 +140,7 @@ export default function RoomDetailsPage() {
                                 ))}
                             </div>
                             <hr className="mt-12 mb-8 text-gray-200 " />
-                            <h3 className="font-bold text-2xl mb-6">Equipements proposé</h3>
+                            <h3 className="font-bold text-2xl mb-6">Equipements proposés</h3>
                             <div className="ml-3 text-gray-700 mb-3">
                                 <div className="flex gap-3 mb-3">
                                     <svg
@@ -216,7 +216,7 @@ export default function RoomDetailsPage() {
                                 </div>
                             </div>
                             <div className="cursor-pointer text-[#7F3A65] w-full m-auto text-center text-[11px] border border-[#7F3A65] rounded-xl h-[32.174560546875] py-2 font-semibold">
-                                Voir tout les équipements
+                                Voir tous les équipements
                             </div>
 
                             <div>
