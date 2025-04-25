@@ -6,11 +6,10 @@ const STOP_WORDS = [
     'au','aux','à','dans','sur','sous','chez','par','que','qui'
 ];
 
-export default function SearchBar() {
+export default function SearchBar({ onResults }) {
     const [input, setInput] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [rooms, setRooms] = useState([]);
 
     const handleSearch = async e => {
         e.preventDefault();
@@ -26,7 +25,9 @@ export default function SearchBar() {
                 startDate,
                 endDate,
             });
-            setRooms(data);
+            const availableOnly = data.filter(room => room.available === true);
+
+            onResults(availableOnly);
         } catch (err) {
             console.error(err);
             alert('Erreur pendant la recherche : ' + err.message);
@@ -34,76 +35,40 @@ export default function SearchBar() {
     };
 
     return (
-        <div className="max-w-3xl mx-auto p-6">
-            <form onSubmit={handleSearch} className="flex flex-wrap gap-2 mb-6">
-                <input
-                    type="text"
-                    value={input}
-                    onChange={e => setInput(e.target.value)}
-                    placeholder="Rechercher chambre, hôtel, ville…"
-                    className="flex-1 border rounded px-3 py-2"
-                />
-                <input
-                    type="date"
-                    value={startDate}
-                    onChange={e => setStartDate(e.target.value)}
-                    className="border rounded px-3 py-2"
-                />
-                <input
-                    type="date"
-                    value={endDate}
-                    onChange={e => setEndDate(e.target.value)}
-                    className="border rounded px-3 py-2"
-                />
+        <form onSubmit={handleSearch} className="flex flex-col gap-6 text-black">
+            <div className="flex flex-col md:flex-row gap-2 justify-center">
+                <div className="w-full md:w-1/4 flex gap-1">
+                    <input
+                        type="text"
+                        value={input}
+                        onChange={e => setInput(e.target.value)}
+                        placeholder="Où allez-vous ?"
+                        className="input md:input-lg md:text-base rounded-lg w-full"
+                    />
+                </div>
+                <div className="w-full md:w-1/2 flex flex-col md:flex-row gap-2 md:gap-1">
+                    <input
+                        type="date"
+                        value={startDate}
+                        onChange={e => setStartDate(e.target.value)}
+                        className="input md:input-lg md:text-base rounded-lg w-full md:w-1/2"
+                    />
+                    <input
+                        type="date"
+                        value={endDate}
+                        onChange={e => setEndDate(e.target.value)}
+                        className="input md:input-lg md:text-base rounded-lg w-full md:w-1/2"
+                    />
+                </div>
+            </div>
+            <div>
                 <button
                     type="submit"
-                    className="px-4 bg-pink-800 text-white rounded hover:bg-pink-900"
+                    className="bg-main border-main rounded-lg shadow-xl text-white btn md:btn-lg md:text-base"
                 >
-                    Rechercher
+                    <span>Trouver un match</span>
                 </button>
-            </form>
-
-            {rooms.length > 0 ? (
-                <div className="overflow-x-auto">
-                    <table className="w-full border-collapse">
-                        <thead>
-                        <tr className="bg-gray-100">
-                            <th className="p-2 text-left">N° Chambre</th>
-                            <th className="p-2 text-left">Type</th>
-                            <th className="p-2 text-center">Capacité</th>
-                            <th className="p-2 text-right">Prix (€)</th>
-                            <th className="p-2 text-left">Équipements</th>
-                            <th className="p-2 text-left">Hôtel</th>
-                            <th className="p-2 text-left">Ville</th>
-                            <th className="p-2 text-center">Disponibilité</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {rooms.map(r => (
-                            <tr key={r.roomId} className="border-t">
-                                <td className="p-2">{r.roomNumber}</td>
-                                <td className="p-2">{r.roomType}</td>
-                                <td className="p-2 text-center">{r.capacity}</td>
-                                <td className="p-2 text-right">{r.price}</td>
-                                <td className="p-2">{r.amenities.join(', ')}</td>
-                                <td className="p-2">{r.hotelName}</td>
-                                <td className="p-2">{r.hotelCity}</td>
-                                <td className="p-2 text-center">
-                                    {r.available ? (
-                                        <span className="text-green-600 font-semibold">Disponible</span>
-                                    ) : (
-                                        <span className="text-red-600 font-semibold">Non dispo</span>
-                                    )}
-                                </td>
-
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                </div>
-            ) : (
-                <p className="text-center text-gray-500">Aucun résultat</p>
-            )}
-        </div>
+            </div>
+        </form>
     );
 }

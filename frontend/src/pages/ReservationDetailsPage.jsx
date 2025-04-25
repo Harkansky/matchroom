@@ -27,7 +27,7 @@ export default function ReservationDetailsPage() {
                             <h3 className="text-lg font-bold">{r.hotel.name}</h3>
                             <p className="text-sm">{r.hotel.city}</p>
                             <p className="text-sm">Chambre {r.room.number} - {r.room.type}</p>
-                            <p className="text-xs">{r.checkIn} ➞ {r.checkOut}</p>
+                            <p className="text-sm">⭐ {r.user.rating || "4.9"}(1458 avis)</p>
                         </div>
                     </div>
                 ))}
