@@ -12,4 +12,13 @@ class NegotiationOfferRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, NegotiationOffer::class);
     }
+
+    public function save(NegotiationOffer $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 }
