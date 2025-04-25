@@ -12,7 +12,7 @@ export default function RoomDetails() {
   ];
 
   return (
-    <div className="w-full">
+    <div className="w-full"> 
     <img src="/img/hotelRoom1.jpg" alt="hotel room" className='w-full rounded-b-4xl shadow-md/30' />
       <h1 className='font-bold text-[20.48px] text-center mt-6'>Bel Maison 4 pieces, France</h1>
       <div className='flex flex-nowrap justify-center items-center gap-3 text-[10.51px]'>
