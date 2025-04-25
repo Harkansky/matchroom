@@ -2,10 +2,13 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Reservation;
 use App\Repository\NegotiationOfferRepository;
 use App\Entity\NegotiationOffer;
+use App\Repository\ReservationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class NegoController extends AbstractController
@@ -80,5 +83,26 @@ class NegoController extends AbstractController
         ];
 
         return new JsonResponse($data);
+    }
+
+    #[Route('/api/negotiation-offers-new', name: 'api_negotiation_offer_new', methods: ['POST'])]
+    public function create(Request $request, NegotiationOfferRepository $repo, ReservationRepository $reservationRepository): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        if (!$data || !isset($data['reservationId'], $data['proposedPrice'])) {
+            return new JsonResponse(['error' => 'Invalid data'], JsonResponse::HTTP_BAD_REQUEST);
+        }
+
+        $negotiationOffer = new NegotiationOffer();
+        $negotiationOffer->setReservation($reservationRepository->find($data['reservationId']['reservationId']));
+        $negotiationOffer->setSender('user');
+        $negotiationOffer->setProposedPrice($data['proposedPrice']['proposedPrice']);
+        $negotiationOffer->setBonusAmenities([]);
+        $negotiationOffer->setCreatedAt(new \DateTimeImmutable());
+
+        $repo->save($negotiationOffer, true);
+
+        return new JsonResponse(['message' => 'Negotiation offer created successfully'], JsonResponse::HTTP_CREATED);
     }
 }
